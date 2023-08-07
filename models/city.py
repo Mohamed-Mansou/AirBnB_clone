@@ -3,6 +3,7 @@
 """ City class"""
 
 from models.base_model import BaseModel
+""" Parent class BaseModel"""
 
 class City(BaseModel):
     
