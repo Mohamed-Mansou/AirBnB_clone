@@ -6,7 +6,7 @@ import models
 from datetime import datetime
 import uuid
 
-class Basemodel:
+class BaseModel:
     def __init__(self,*args, **kwargs):
         """ the BaseModel instance """
         setattr()
