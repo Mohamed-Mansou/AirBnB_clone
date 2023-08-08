@@ -6,8 +6,8 @@ from models.base_model import BaseModel
 
 """ Parent class BaseModel """
 
+
 class Place(BaseModel):
-    
     """ Place Class that inherits from BaseModel Class """
     city_id = ""
     user_id = ""
