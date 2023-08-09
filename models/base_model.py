@@ -7,8 +7,5 @@ from datetime import datetime
 import uuid
 
 class BaseModel:
-    def __init__(self,*args, **kwargs):
-        """ the BaseModel instance """
-        setattr()
+    def __init__():
         pass
-

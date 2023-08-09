@@ -6,8 +6,8 @@ from models.base_model import BaseModel
 """ Parent class BaseModel"""
 
 class City(BaseModel):
-    
     """ City class that inherits from BaseModel class """
-    
-    state_id=""
-    name=""
+
+
+    state_id = ""
+    name = ""
