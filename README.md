@@ -19,3 +19,5 @@ What’s a command interpreter?
    -Do operations on objects (count, compute stats, etc…)
    -Update attributes of an object
    -Destroy an object
+
+All tests should also pass in non-interactive mode: $ echo "python3 -m unittest discover tests" | bash
