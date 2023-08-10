@@ -9,11 +9,13 @@ class FileStorage:
     """ Public instance methods"""
     
     def all(self):
-        """ returns the dictionary __objects """
+        """ returns the dictionary of__objects """
         return self.__objects
     def new(self, obj):
-        """ sets in __objects the obj with key <obj class name>.id """
-        pass
+        """Sets in __objects the obj with key <obj class name>.id."""
+
+        obj_id = obj.__class__.__name__ + "." + str(obj.id)
+        self.__objects[obj_id] = obj
     def save(self):
         """ serializes __objects to the JSON file """
         pass
