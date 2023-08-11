@@ -52,21 +52,5 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
             return
         pass
-
-    def do_destroy(self, args):
-        """
-        Deletes an instance based on the class name and id
-        """
-        pass
-
-    def do_all(self, args):
-        """Prints all string representation of all"""
-        pass
-
-    def do_update(self, args):
-        """ Updates an instance based on the class name and id"""
-        pass
-
-
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
