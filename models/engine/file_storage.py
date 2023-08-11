@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """  class FileStorage that serializes instances to a JSON file and deserializes JSON file to instances """
 import json
+import os
+import sys
 
 class FileStorage:
     
@@ -26,4 +28,10 @@ class FileStorage:
     
     def reload(self):
         """ deserializes the JSON file to __objects """
-        pass
+        if os.path.exists(self.__file_path):
+            with open(self.__file_path, 'r') as f:
+                new_obj_dict = json.load(f)
+            for value in new_obj_dict.values():
+                class_name = value["__class__"]
+                obj = getattr(sys.modules[class_name], "__new__")(**value)
+                self.new(obj)
