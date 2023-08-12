@@ -40,13 +40,13 @@ class BaseModel:
     def __str__(self):
         """ the string representation"""
         
-        return "[{}], ({}), {}".format(self.__class__.__name__,self.id,self.__dict__)
+        return "[{}], ({}), {}".format(self.__class__.__name__, self.id, self.__dict__)
     def save(self):
+        
         """updates the public instance attribute updated_at with the current datetime"""
         self.updated_at = datetime.now()
         """ import storage variable """
         models.storage.save()
-        
     def to_dict(self):
         """  returns a dictionary containing all keys/values of __dict__ of the instance """
         this_my_dict = self.__dict__.copy()
