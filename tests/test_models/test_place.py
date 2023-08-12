@@ -5,6 +5,7 @@
 import unittest
 from models.place import Place
 
+
 class test_place(unittest.TestCase):
     """ class test_review check Place class test cases """
 
@@ -19,6 +20,7 @@ class test_place(unittest.TestCase):
 
         new = self.value()
         self.assertEqual(type(new.city_id), str)
+
     def test_user_id(self):
 
         """ test user_id """
