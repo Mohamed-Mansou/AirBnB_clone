@@ -32,4 +32,3 @@ class test_User(unittest.TestCase):
         """ """
         new = self.value()
         self.assertEqual(type(new.password), str)
-        
