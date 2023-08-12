@@ -5,19 +5,13 @@ import cmd
 from models import storage
 import json
 from models.base_model import BaseModel
-from models.user import User
-from models.city import City
-from models.state import State
-from models.amenity import Amenity
-from models.review import Review
-from models.place import Place
 
 
 class HBNBCommand(cmd.Cmd):
     """Defines the command interpreter."""
 
     prompt = "(hbnb) "
-    __models = {
+   t__models = {
         "BaseModel", "User", "State", "City", "Place", "Amenity", "Review"
     }
 
@@ -64,129 +58,3 @@ class HBNBCommand(cmd.Cmd):
             return
         print(storage.all()[f"{args[0]}.{args[1]}"])
 
-    def do_destroy(self, args):
-        """Deletes an instance based on the class name and id."""
-        if not args:
-            print("** class name missing **")
-            return
-        args = args.split()
-        if args[0] not in self.t__models:
-            print("** class doesn't exist **")
-            return
-        if len(args) == 1:
-            print("** instance id missing **")
-            return
-        if f"{args[0]}.{args[1]}" not in storage.all():
-            print("** no instance found **")
-            return
-        del storage.all()[f"{args[0]}.{args[1]}"]
-        storage.save()
-
-    def do_all(self, args):
-        """Prints all string representation of all instances based on
-        the class name"""
-        obj_s = storage.all()
-        if not args:
-            print([str(obj) for obj in obj_s.values()])
-            return
-        args = args.split()
-        if args[0] not in self.t__models:
-            print("** class doesn't exist **")
-            return
-        _All = []
-        for obj in obj_s.values():
-            if obj.__class__.__name__ == args[0]:
-                all.append(str(obj))
-        print(_All)
-
-    def do_update(self, args):
-        """
-        Updates an instance based on the class name and id
-        """
-        obj_s = storage.all()
-        if not args:
-            print("** class name missing **")
-            return
-        args = args.split()
-        if args[0] not in self.t__models:
-            print("** class doesn't exist **")
-            return
-        if len(args) == 1:
-            print("** instance id missing **")
-            return
-        if f"{args[0]}.{args[1]}" not in obj_s:
-            print("** no instance found **")
-            return
-        if len(args) == 2:
-            print("** attribute name missing **")
-            return
-        if len(args) < 4:
-            print("** value missing **")
-            return
-
-        if args[3].isdigit():
-            a_value = int(args[3])
-        else:
-            try:
-                a_value = float(args[3])
-            except ValueError:
-                a_value = args[3].replace('"', "")
-        for key, obj in obj_s.items():
-            if f"{args[0]}.{args[1]}" == key:
-                setattr(obj, args[2], a_value)
-                storage.save()
-                return
-
-    def default(self, line):
-        """
-        handle dot notaion commands
-        functions:
-            - update, all, show, destroy, count
-        """
-        if '.' in line:
-            obj_s = storage.all()
-            cls, mthd = line.split('.')
-
-            # usage: <class name>.all()
-            if mthd == "all()":
-                print("[", end="")
-                for obj in obj_s.values():
-                    if obj.__class__.__name__ == cls:
-                        print(obj, end="")
-                print("]")
-
-            # usage: <class name>.count()
-            elif mthd == "count()":
-                all = []
-                for obj in obj_s.values():
-                    if obj.__class__.__name__ == cls:
-                        all.append(obj)
-                print(len(all))
-
-            # usage: <class name>.show(<ID>)
-            elif mthd[0:4] == "show":
-                self.do_show(f"{cls} {mthd[6:-2]}")
-
-            # usage: <class name>.destroy(<ID>)
-            elif mthd[0:7] == "destroy":
-                self.do_destroy(f"{cls} {mthd[9:-2]}")
-
-            # usage: <class name>.update(<id>, <attr name>, <attr value>)
-            # usage: <class name>.update(<id>, <dictionary representation>)
-            elif mthd[0:6] == "update":
-                id, attr = mthd[7:-1].split(",", 1)
-                id = id.split('"')[1]
-                try:
-                    att = json.loads(attr.replace("'", '"'))
-                    print(att)
-                    for k, v in att.items():
-                        print(f"{cls} {id} {k} {v}")
-                        self.do_update(f"{cls} {id} {k} {v}")
-                except Exception:
-                    attr, val = attr.split(',')
-                    attr = attr.split('"')[1]
-                    self.do_update(f"{cls} {id} {attr} {val}")
-
-
-if __name__ == '__main__':
-    HBNBCommand().cmdloop()
