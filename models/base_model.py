@@ -6,6 +6,7 @@ import models
 from datetime import datetime
 import uuid
 
+
 class BaseModel:
     def __init__(self, *args, **kwargs):
         """
@@ -38,11 +39,12 @@ class BaseModel:
 
     def __str__(self):
         """ the string representation"""
-        return "[{}],({}),{}".format(self.__class__.__name__,self.id,self.__dict__)
+        
+        return "[{}], ({}), {}".format(self.__class__.__name__,self.id,self.__dict__)
     def save(self):
         """updates the public instance attribute updated_at with the current datetime"""
         self.updated_at = datetime.now()
-        """ import storage variable"""
+        """ import storage variable """
         models.storage.save()
         
     def to_dict(self):
