@@ -5,6 +5,7 @@
 import unittest
 from models.city import City
 
+
 class test_City(unittest.TestCase):
     """ class test_review check City class test cases """
 
@@ -20,4 +21,4 @@ class test_City(unittest.TestCase):
 
     def test_name(self):
         new = self.value()
-        self.assertEqual(type(new.state_id),str)
+        self.assertEqual(type(new.state_id), str)
