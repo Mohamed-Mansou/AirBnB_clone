@@ -1,3 +1,6 @@
+# #!/usr/bin/python3
+# """The HBnB console."""
+
 import cmd
 from models import storage
 import json
