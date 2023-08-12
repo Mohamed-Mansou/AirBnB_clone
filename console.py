@@ -3,7 +3,15 @@
 
 import cmd
 import json
+import os
+from models.city import City
 from models.base_model import BaseModel
+from models.user import User
+from models import storage
+from models.amenity import Amenity
+from models.review import Review
+from models.place import Place
+from models.state import State
 
 
 class HBNBCommand(cmd.Cmd):
@@ -15,12 +23,12 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def do_EOF(self, arg):
-        """Exit The Program useing End-of-File(Ctrl+D)"""
-        print()
+        """Exit The Program using End-of-File """
+        print('')
         return True
 
     def emptyline(self):
-        """Do nothing on an empty line"""
+        """ an empty line + ENTER shouldn’t execute anything """
         pass
 
     def do_create(self, arg):
@@ -35,12 +43,13 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
 
-        new_instance = eval(class_name)()
+        new_instance = eval(class_name)
         new_instance.save()
         print(new_instance.id)
 
     def do_show(self, arg):
         """Prints the string representation of an instance."""
+
         args = arg.split()
         if len(args) == 0:
             print("** class name missing **")
@@ -51,6 +60,7 @@ class HBNBCommand(cmd.Cmd):
         elif len(args) == 1:
             print("** instance id missing **")
             return
+<<<<<<< HEAD
         instance_key = f"{args[0]}.{args[1]}"
         all_instances = storage.all()
         if instance_key not in all_instances:
@@ -111,6 +121,9 @@ class HBNBCommand(cmd.Cmd):
                 setattr(obj, args[2], t_value)
                 storage.save()
                 return
+=======
+        pass
+>>>>>>> abb3b4a7d368fa4fb0bfffda15842203b53d1cee
 
 
 if __name__ == '__main__':
