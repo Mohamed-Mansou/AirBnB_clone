@@ -28,53 +28,54 @@ class test_place(unittest.TestCase):
 
     def test_name(self):
         """ test name"""
-        
+
         new = self.value()
         self.assertEqual(type(new.name), str)
+
     def test_description(self):
         """ test description """
-        
+
         new = self.value()
         self.assertEqual(type(new.description), str)
 
     def test_number_rooms(self):
         """ test number_rooms """
-        
+
         new = self.value()
         self.assertEqual(type(new.number_rooms), int)
 
     def test_number_bathrooms(self):
         """ test number_bathroom """
-        
+
         new = self.value()
         self.assertEqual(type(new.number_bathrooms), int)
 
     def test_max_guest(self):
         """ test max_guest """
-        
+
         new = self.value()
         self.assertEqual(type(new.max_guest), int)
 
     def test_price_by_night(self):
         """ test price_by_night """
-        
+
         new = self.value()
         self.assertEqual(type(new.price_by_night), int)
 
     def test_latitude(self):
         """ test latitude"""
-        
+
         new = self.value()
         self.assertEqual(type(new.latitude), float)
 
     def test_longitude(self):
         """ test longitude """
-        
+
         new = self.value()
         self.assertEqual(type(new.longitude), float)
 
     def test_amenity_ids(self):
         """ test amenity_ids """
-        
+
         new = self.value()
-        self.assertEqual(type(new.amenity_ids),list)
+        self.assertEqual(type(new.amenity_ids), list)
