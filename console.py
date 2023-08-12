@@ -1,0 +1,139 @@
+import cmd
+from models import storage
+import json
+from models.base_model import BaseModel
+from models.user import User
+from models.city import City
+from models.state import State
+from models.amenity import Amenity
+from models.review import Review
+from models.place import Place
+
+
+class HBNBCommand(cmd.Cmd):
+    """Defines the command interpreter."""
+
+    prompt = "(hbnb) "
+    __models = {
+        "BaseModel", "User", "State", "City", "Place", "Amenity", "Review"
+    }
+
+    def do_quit(self, args):
+        """Exit The Program."""
+        return True
+
+    def do_EOF(self, args):
+        """Exit The Program useing End-of-File(Ctrl+D)"""
+        return True
+
+    def emptyline(self):
+        """Do nothing on an empty line"""
+        pass
+
+    def do_create(self, args):
+        """Creates a new instance of BaseModel"""
+        if not args:
+            print("** class name missing **")
+            return
+        args = args.split()
+        if args[0] not in self.t__models:
+            print("** class doesn't exist **")
+            return
+
+        ob_j = eval(args[0])()  # creates an instance
+        ob_j.save()
+        print(ob_j.id)
+
+    def do_show(self, args):
+        """Prints the string representation of an instance."""
+        if not args:
+            print("** class name missing **")
+            return
+        args = args.split()
+        if args[0] not in self.t__models:
+            print("** class doesn't exist **")
+            return
+        if len(args) == 1:
+            print("** instance id missing **")
+            return
+        if f"{args[0]}.{args[1]}" not in storage.all():
+            print("** no instance found **")
+            return
+        print(storage.all()[f"{args[0]}.{args[1]}"])
+
+    def do_destroy(self, args):
+        """Deletes an instance based on the class name and id."""
+        if not args:
+            print("** class name missing **")
+            return
+        args = args.split()
+        if args[0] not in self.t__models:
+            print("** class doesn't exist **")
+            return
+        if len(args) == 1:
+            print("** instance id missing **")
+            return
+        if f"{args[0]}.{args[1]}" not in storage.all():
+            print("** no instance found **")
+            return
+        del storage.all()[f"{args[0]}.{args[1]}"]
+        storage.save()
+
+    def do_all(self, args):
+        """Prints all string representation of all instances based on
+        the class name"""
+        obj_s = storage.all()
+        if not args:
+            print([str(obj) for obj in obj_s.values()])
+            return
+        args = args.split()
+        if args[0] not in self.t__models:
+            print("** class doesn't exist **")
+            return
+        _All = []
+        for obj in obj_s.values():
+            if obj.__class__.__name__ == args[0]:
+                all.append(str(obj))
+        print(_All)
+
+    def do_update(self, args):
+        """
+        Updates an instance based on the class name and id
+        """
+        obj_s = storage.all()
+        if not args:
+            print("** class name missing **")
+            return
+        args = args.split()
+        if args[0] not in self.t__models:
+            print("** class doesn't exist **")
+            return
+        if len(args) == 1:
+            print("** instance id missing **")
+            return
+        if f"{args[0]}.{args[1]}" not in obj_s:
+            print("** no instance found **")
+            return
+        if len(args) == 2:
+            print("** attribute name missing **")
+            return
+        if len(args) < 4:
+            print("** value missing **")
+            return
+
+        if args[3].isdigit():
+            a_value = int(args[3])
+        else:
+            try:
+                a_value = float(args[3])
+            except ValueError:
+                a_value = args[3].replace('"', "")
+        for key, obj in obj_s.items():
+            if f"{args[0]}.{args[1]}" == key:
+                setattr(obj, args[2], a_value)
+                storage.save()
+                return
+
+
+if __name__ == '__main__':
+    HBNBCommand().cmdloop()
