@@ -1,4 +1,5 @@
-#!/usr/bin/python3
+#!/usr/bin/python3ls
+
 """  class FileStorage that serializes instances to a
 JSON file and deserializes JSON file to instances """
 import json
@@ -22,6 +23,7 @@ class FileStorage:
 
     def all(self):
         """ returns the dictionary of__objects """
+
         return self.__objects
     def new(self, obj):
         """Sets in __objects the obj with key <obj class name>.id."""
