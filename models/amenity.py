@@ -8,4 +8,5 @@ from models.base_model import BaseModel
 class Amenity(BaseModel):
     """ Amenity class that inherit from Parent class BaseModel """
 
+
     name = ""
