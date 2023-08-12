@@ -134,6 +134,56 @@ class HBNBCommand(cmd.Cmd):
                 storage.save()
                 return
 
+    def default(self, line):
+        """
+        handle dot notaion commands
+        functions:
+            - update, all, show, destroy, count
+        """
+        if '.' in line:
+            obj_s = storage.all()
+            cls, mthd = line.split('.')
+
+            # usage: <class name>.all()
+            if mthd == "all()":
+                print("[", end="")
+                for obj in obj_s.values():
+                    if obj.__class__.__name__ == cls:
+                        print(obj, end="")
+                print("]")
+
+            # usage: <class name>.count()
+            elif mthd == "count()":
+                all = []
+                for obj in obj_s.values():
+                    if obj.__class__.__name__ == cls:
+                        all.append(obj)
+                print(len(all))
+
+            # usage: <class name>.show(<ID>)
+            elif mthd[0:4] == "show":
+                self.do_show(f"{cls} {mthd[6:-2]}")
+
+            # usage: <class name>.destroy(<ID>)
+            elif mthd[0:7] == "destroy":
+                self.do_destroy(f"{cls} {mthd[9:-2]}")
+
+            # usage: <class name>.update(<id>, <attr name>, <attr value>)
+            # usage: <class name>.update(<id>, <dictionary representation>)
+            elif mthd[0:6] == "update":
+                id, attr = mthd[7:-1].split(",", 1)
+                id = id.split('"')[1]
+                try:
+                    att = json.loads(attr.replace("'", '"'))
+                    print(att)
+                    for k, v in att.items():
+                        print(f"{cls} {id} {k} {v}")
+                        self.do_update(f"{cls} {id} {k} {v}")
+                except Exception:
+                    attr, val = attr.split(',')
+                    attr = attr.split('"')[1]
+                    self.do_update(f"{cls} {id} {attr} {val}")
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
