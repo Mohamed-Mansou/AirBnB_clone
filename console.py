@@ -48,24 +48,69 @@ class HBNBCommand(cmd.Cmd):
         elif args[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
             return
-        elif len(args) < 1:
+        elif len(args) == 1:
             print("** instance id missing **")
             return
-        pass
-
-    def do_destroy(self, args):
-        """
-        Deletes an instance based on the class name and id
-        """
-        pass
+        instance_key = f"{args[0]}.{args[1]}"
+        all_instances = storage.all()
+        if instance_key not in all_instances:
+            print("** no instance found **")
+            return
+        else:
+            all_instances.pop(instance_key)
+            storage.save()
 
     def do_all(self, args):
         """Prints all string representation of all"""
-        pass
+        obj_s = storage.all()
+        if not args:
+            print([str(obj) for obj in obj_s.values()])
+            return
+        args = args.split()
+        if args[0] not in HBNBCommand.__classes:
+            print("** class doesn't exist **")
+            return
+        every = []
+        for obj in obj_s.values():
+            if obj.__class__.__name__ == args[0]:
+                every.append(str(obj))
+        print(every)
 
     def do_update(self, args):
         """ Updates an instance based on the class name and id"""
-        pass
+        obj_s = storage.all()
+        if not args:
+            print("** class name missing **")
+            return
+        args = args.split()
+        if args[0] not in HBNBCommand.__classes:
+            print("** class doesn't exist **")
+            return
+        if len(args) < 2:
+            print("** instance id missing **")
+            return
+        if f"{args[0]}.{args[1]}" not in obj_s:
+            print("** no instance found **")
+            return
+        if len(args) < 3:
+            print("** attribute name missing **")
+            return
+        if len(args) < 4:
+            print("** value missing **")
+            return
+
+        if args[3].isdigit():
+            t_value = int(args[3])
+        else:
+            try:
+                t_value = float(args[3])
+            except ValueError:
+                t_value = args[3].replace('"', "")
+        for key, obj in obj_s.items():
+            if f"{args[0]}.{args[1]}" == key:
+                setattr(obj, args[2], t_value)
+                storage.save()
+                return
 
 
 if __name__ == '__main__':
