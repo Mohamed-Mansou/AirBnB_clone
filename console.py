@@ -136,7 +136,7 @@ class HBNBCommand(cmd.Cmd):
                 storage.save()
                 return
 
-    def default(self,line):
+    def default(self, line):
         """
         handle dot notaion commands
         """
@@ -159,7 +159,7 @@ class HBNBCommand(cmd.Cmd):
 
         elif methd.startswith('show'):
             id = args[0]
-            self.do_show(f'{cls}.{id}'.format(cls,id ))
+            self.do_show (f'{cls}.{id}'.format(cls, id ) )
 
         elif methd.startswith('destroy'):
             id = args[0]
