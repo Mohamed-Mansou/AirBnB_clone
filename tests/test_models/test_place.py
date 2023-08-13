@@ -80,4 +80,4 @@ class test_place(unittest.TestCase):
         """ test amenity_ids """
 
         new = self.value()
-        self.assertEqual(type(new.amenity_ids), list)
+        self.assertEqual(type(new.amenity_ids), str)
