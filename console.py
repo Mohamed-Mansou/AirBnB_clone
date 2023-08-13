@@ -142,7 +142,7 @@ class HBNBCommand(cmd.Cmd):
             obj_s = storage.all()
             cls, methd = line.split('.')
 
-            # usage: <class name>.all()
+            # use <class name>.all()
             if methd == "all()":
                 print("[", end="")
                 for obj in obj_s.values():
@@ -150,7 +150,7 @@ class HBNBCommand(cmd.Cmd):
                         print(obj, end="")
                 print("]")
 
-            # usage: <class name>.count()
+            # use <class name>.count()
             elif methd == "count()":
                 all = []
                 for obj in obj_s.values():
@@ -158,16 +158,16 @@ class HBNBCommand(cmd.Cmd):
                         all.append(obj)
                 print(len(all))
 
-            # usage: <class name>.show(<ID>)
+            # use <class name>.show(<id>)
             elif methd[0:4] == "show":
                 self.do_show(f"{cls} {methd[6:-2]}")
 
-            # usage: <class name>.destroy(<ID>)
+            # use <class name>.destroy(<id>)
             elif methd[0:7] == "destroy":
                 self.do_destroy(f"{cls} {methd[9:-2]}")
 
-            # usage: <class name>.update(<id>, <attr name>, <attr value>)
-            # usage: <class name>.update(<id>, <dictionary representation>)
+            # use <class name>.update(<id>, <attr name>, <attr value>)
+            # use <class name>.update(<id>, <dictionary representation>)
             elif methd[0:6] == "update":
                 id, attr = methd[7:-1].split(",", 1)
                 id = id.split('"')[1]
