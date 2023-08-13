@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""The HBnB console."""
+"""The HBnB console that contains
+the entry point of the command interpreter"""
 
 
 import cmd
