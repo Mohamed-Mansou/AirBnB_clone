@@ -37,7 +37,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """Creates a new instance of BaseModel"""
-        if not args:
+        if len(arg) == 0:
             print("** class name missing **")
             return
         args = args.split()
@@ -68,7 +68,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, args):
         """ Deletes an instance based on the class name and id."""
-        if not args:
+        if len(arg) == 0:
             print("** class name missing **")
             return
         args = args.split()
