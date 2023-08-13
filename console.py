@@ -137,52 +137,54 @@ class HBNBCommand(cmd.Cmd):
                 return
 
     def default(self, line):
-        """
-        handle dot notaion commands
-        """
-        if '.' in line:
-            obj_s = storage.all()
-            cls, methd = line.split('.')
+    """
+    handle dot notaion commands
+    """
+    if '.' in line:
+        cls, methd, *args = line.split('.')
 
-            # use <class name>.all()
-            if methd == "all()":
-                print("[", end="")
-                for obj in obj_s.values():
-                    if obj.__class__.__name__ == cls:
-                        print(obj, end="")
-                print("]")
+        # use <class name>.all()
+        if methd == 'all':
+            print('[', end='')
+            for obj in storage.all().values():
+                if obj.__class__.__name__ == cls:
+                    print(obj, end='')
+            print(']')
 
-            # use <class name>.count()
-            elif methd == "count()":
-                all = []
-                for obj in obj_s.values():
-                    if obj.__class__.__name__ == cls:
-                        all.append(obj)
-                print(len(all))
+        # use <class name>.count()
+        elif methd == 'count':
+            all = []
+            for obj in storage.all().values():
+                if obj.__class__.__name__ == cls:
+                    all.append(obj)
+            print(len(all))
 
-            # use <class name>.show(<id>)
-            elif methd[0:4] == "show":
-                self.do_show(f"{cls} {methd[6:-2]}")
+        # use <class name>.show(<id>)
+        elif methd.startswith('show'):
+            id = args[0]
+            self.do_show(f'{cls} {id}')
 
-            # use <class name>.destroy(<id>)
-            elif methd[0:7] == "destroy":
-                self.do_destroy(f"{cls} {methd[9:-2]}")
+        # use <class name>.destroy(<id>)
+        elif methd.startswith('destroy'):
+            id = args[0]
+            self.do_destroy(f'{cls} {id}')
 
-            # use <class name>.update(<id>, <attr name>, <attr value>)
-            # use <class name>.update(<id>, <dictionary representation>)
-            elif methd[0:6] == "update":
-                id, attr = methd[7:-1].split(",", 1)
-                id = id.split('"')[1]
+        # use <class name>.update(<id>, <attr name>, <attr value>)
+        # use <class name>.update(<id>, <dictionary representation>)
+        elif methd.startswith('update'):
+            id = args[0]
+            attr = args[1]
+            if ',' in attr:
                 try:
-                    att = json.loads(attr.replace("'", '"'))
-                    print(att)
-                    for k, v in att.items():
-                        print("{} {} {} {}".format(cls, id, k, v))
-                        self.do_update("{} {} {} {}".format(cls, id, k, v))
-                except Exception:
-                    attr, val = attr.split(',')
-                    attr = attr.split('"')[1]
-                    self.do_update("{} {} {} {}".format(cls, id, attr, val))
+                    attr = json.loads(attr.replace("'", '"'))
+                    for k, v in attr.items():
+                        print(f'{cls} {id} {k} {v}')
+                        self.do_update(f'{cls} {id} {k} {v}')
+                except Exception as e:
+                    print(f'Error: {e}')
+            else:
+                attr = attr.split('"')[1]
+                self.do_update(f'{cls} {id} {attr} {args[2]}')
 
 
 if __name__ == '__main__':
