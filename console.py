@@ -131,11 +131,10 @@ class HBNBCommand(cmd.Cmd):
             except ValueError:
                 a_val = args[3].replace('"', "")
         for key, obj in obj_s.items():
-
-            if f"{args[0]}.{args[1]}" == key: 
-                setattr(obj, args[2], a_val)
-                storage.save()
-                return
+                if f"{args[0]}.{args[1]}" == key: 
+                    setattr(obj, args[2], a_val)
+                    storage.save()
+                    return
 
     def default(self, line):
         """
