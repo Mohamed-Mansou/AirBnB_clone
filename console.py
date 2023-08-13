@@ -87,7 +87,7 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, args):
         """Prints all string representation of all instances"""
         obj_s = storage.all()
-        if not args:
+        if len(arg) == 0:
             print([str(obj) for obj in obj_s.values()])
             return
         args = args.split()
@@ -103,7 +103,7 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, args):
         """Updates an instance based on the class name and id"""
         obj_s = storage.all()
-        if not args:
+        if len(arg) == 0:
             print("** class name missing **")
             return
         args = args.split()
