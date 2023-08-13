@@ -37,7 +37,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """Creates a new instance of BaseModel"""
-        if len(arg) == 0:
+        if len(args) == 0:
             print("** class name missing **")
             return
         args = args.split()
@@ -51,7 +51,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, args):
         """Prints the string representation of an instance."""
-        if len(arg) == 0:
+        if len(args) == 0:
             print("** class name missing **")
             return
         args = args.split()
@@ -68,7 +68,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, args):
         """ Deletes an instance based on the class name and id."""
-        if len(arg) == 0:
+        if len(args) == 0:
             print("** class name missing **")
             return
         args = args.split()
@@ -87,7 +87,7 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, args):
         """Prints all string representation of all instances"""
         obj_s = storage.all()
-        if len(arg) == 0:
+        if len(args) == 0:
             print([str(obj) for obj in obj_s.values()])
             return
         args = args.split()
@@ -103,7 +103,7 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, args):
         """Updates an instance based on the class name and id"""
         obj_s = storage.all()
-        if len(arg) == 0:
+        if len(args) == 0:
             print("** class name missing **")
             return
         args = args.split()
@@ -131,19 +131,18 @@ class HBNBCommand(cmd.Cmd):
             except ValueError:
                 a_val = args[3].replace('"', "")
         for key, obj in obj_s.items():
-            if f"{}.{}.format(args[0],args[1])" == key:
+            if ["{}.{}".format(args[0], args[1])] == key: 
                 setattr(obj, args[2], a_val)
                 storage.save()
                 return
 
-    def default(self, line):
-    """
-    handle dot notaion commands
-    """
-    if '.' in line:
-        cls, methd, *args = line.split('.')
+    def default(self,line):
+        """
+        handle dot notaion commands
+        """
+        if '.' in line:
+            cls, methd, *args = line.split('.')
 
-        # use <class name>.all()
         if methd == 'all':
             print('[', end='')
             for obj in storage.all().values():
@@ -151,7 +150,6 @@ class HBNBCommand(cmd.Cmd):
                     print(obj, end='')
             print(']')
 
-        # use <class name>.count()
         elif methd == 'count':
             all = []
             for obj in storage.all().values():
@@ -159,18 +157,14 @@ class HBNBCommand(cmd.Cmd):
                     all.append(obj)
             print(len(all))
 
-        # use <class name>.show(<id>)
         elif methd.startswith('show'):
             id = args[0]
-            self.do_show(f'{cls} {id}')
+            self.do_show(f'{cls}.{id}'.format(cls,id ))
 
-        # use <class name>.destroy(<id>)
         elif methd.startswith('destroy'):
             id = args[0]
             self.do_destroy(f'{cls} {id}')
 
-        # use <class name>.update(<id>, <attr name>, <attr value>)
-        # use <class name>.update(<id>, <dictionary representation>)
         elif methd.startswith('update'):
             id = args[0]
             attr = args[1]
