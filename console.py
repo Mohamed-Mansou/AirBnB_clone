@@ -134,39 +134,39 @@ class HBNBCommand(cmd.Cmd):
                 setattr(obj, args[2], a_val)
                 storage.save()
                 return
-
     def default(self, line):
         """
-        handle and update, all, show, destroy, count
+        handle dot notaion commands
         """
         if '.' in line:
             obj_s = storage.all()
             cls, methd = line.split('.')
 
             # usage: <class name>.all()
-            if mthd == "all()":
+            if methd == "all()":
                 print("[", end="")
-                for obj in objs.values():
+                for obj in obj_s.values():
                     if obj.__class__.__name__ == cls:
                         print(obj, end="")
                 print("]")
 
-            i# usage: <class name>.count()
+            # usage: <class name>.count()
             elif methd == "count()":
-                t_all = []
+                all = []
                 for obj in obj_s.values():
                     if obj.__class__.__name__ == cls:
-                        t_all.append(obj)
-                print(len(t_all))
+                        all.append(obj)
+                print(len(all))
 
-            # usage: <class name>.show(<id>)
+            # usage: <class name>.show(<ID>)
             elif methd[0:4] == "show":
                 self.do_show(f"{cls} {methd[6:-2]}")
 
-            # usage: <class name>.destroy(<id>)
+            # usage: <class name>.destroy(<ID>)
             elif methd[0:7] == "destroy":
                 self.do_destroy(f"{cls} {methd[9:-2]}")
 
+            # usage: <class name>.update(<id>, <attr name>, <attr value>)
             # usage: <class name>.update(<id>, <dictionary representation>)
             elif methd[0:6] == "update":
                 id, attr = methd[7:-1].split(",", 1)
@@ -175,12 +175,12 @@ class HBNBCommand(cmd.Cmd):
                     att = json.loads(attr.replace("'", '"'))
                     print(att)
                     for k, v in att.items():
-                        print(f"{cls} {id} {k} {v}")
-                        self.do_update(f"{cls} {id} {k} {v}")
+                        print("{} {} {} {}".format(cls, id, k, v))
+                        self.do_update("{} {} {} {}".format(cls, id, k, v))
                 except Exception:
                     attr, val = attr.split(',')
                     attr = attr.split('"')[1]
-                    self.do_update(f"{cls} {id} {attr} {val}")
+                    self.do_update("{} {} {} {}".format(cls, id, attr, val))
 
 
 if __name__ == '__main__':
