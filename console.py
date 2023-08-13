@@ -134,6 +134,7 @@ class HBNBCommand(cmd.Cmd):
                 setattr(obj, args[2], a_val)
                 storage.save()
                 return
+
     def default(self, line):
         """
         handle dot notaion commands
