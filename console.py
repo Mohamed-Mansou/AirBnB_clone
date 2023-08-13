@@ -18,8 +18,9 @@ class HBNBCommand(cmd.Cmd):
     """Defines the command interpreter."""
 
     prompt = "(hbnb) "
-    __mod_els = {"BaseModel", "User", "State", "City", "Place", "Amenity",
-                "Review"}
+    __mod_els = {
+        "BaseModel", "User", "State", "City", "Place", "Amenity", "Review"
+    }
 
     def do_quit(self, args):
         """Exit The Program."""
@@ -99,7 +100,7 @@ class HBNBCommand(cmd.Cmd):
         print(t_all)
 
     def do_update(self, args):
-        """Updates an instance based on the class name and id""" 
+        """Updates an instance based on the class name and id"""
         obj_s = storage.all()
         if not args:
             print("** class name missing **")
@@ -140,23 +141,20 @@ class HBNBCommand(cmd.Cmd):
         """
         if '.' in line:
             obj_s = storage.all()
-            cls, methd = line.split('.')
-
-            # usage: <class name>.all()
+            cls, methd = line.split('.', 1)
             if methd == "all()":
+                m_j = [o for o in obj_s.values() if obj.__class__.__name__ == cls]
                 print("[", end="")
-                for obj in obj_s.values():
-                    if obj.__class__.__name__ == cls:
-                        print(obj, end="")
+                print(", ".join(map(str, m_j)), end="")
                 print("]")
 
             # usage: <class name>.count()
             elif methd == "count()":
-                all = []
+                t_all = []
                 for obj in obj_s.values():
                     if obj.__class__.__name__ == cls:
-                        all.append(obj)
-                print(len(all))
+                        t_ll.append(obj)
+                print(len(t_all))
 
             # usage: <class name>.show(<id>)
             elif methd[0:4] == "show":
@@ -166,7 +164,6 @@ class HBNBCommand(cmd.Cmd):
             elif methd[0:7] == "destroy":
                 self.do_destroy(f"{cls} {methd[9:-2]}")
 
-            # usage: <class name>.update(<id>, <attr name>, <attr value>)
             # usage: <class name>.update(<id>, <dictionary representation>)
             elif methd[0:6] == "update":
                 id, attr = methd[7:-1].split(",", 1)
