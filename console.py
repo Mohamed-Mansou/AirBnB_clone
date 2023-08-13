@@ -141,19 +141,22 @@ class HBNBCommand(cmd.Cmd):
         """
         if '.' in line:
             obj_s = storage.all()
-            cls, methd = line.split('.', 1)
-            if methd == "all()":
-                m_j = [o for o in obj_s.values() if obj.__class__.__name__ == cls]
+            cls, methd = line.split('.')
+
+            # usage: <class name>.all()
+            if mthd == "all()":
                 print("[", end="")
-                print(", ".join(map(str, m_j)), end="")
+                for obj in objs.values():
+                    if obj.__class__.__name__ == cls:
+                        print(obj, end="")
                 print("]")
 
-            # usage: <class name>.count()
+            i# usage: <class name>.count()
             elif methd == "count()":
                 t_all = []
                 for obj in obj_s.values():
                     if obj.__class__.__name__ == cls:
-                        t_ll.append(obj)
+                        t_all.append(obj)
                 print(len(t_all))
 
             # usage: <class name>.show(<id>)
