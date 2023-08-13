@@ -28,7 +28,7 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def do_EOF(self, args):
-        """Exit The Program useing End-of-File(Ctrl+D)"""
+        """Exit The Program using End-of-File(Eof) with (Ctrl+D)"""
         return True
 
     def emptyline(self):
