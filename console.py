@@ -142,7 +142,7 @@ class HBNBCommand(cmd.Cmd):
         """
         if '.' in line:
             obje_sss = storage.all()
-            cls, mthd = line.split('.')
+            cls, methd = line.split('.')
 
             # use <class name>.all()
             if methd == "all()":
