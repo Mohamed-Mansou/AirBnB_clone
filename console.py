@@ -142,10 +142,10 @@ class HBNBCommand(cmd.Cmd):
         """
         if '.' in line:
             obje_sss = storage.all()
-            cls, methd = line.split('.')
+            cls, mee_thd = line.split('.')
 
             # use <class name>.all()
-            if methd == "all()":
+            if mee_thd == "all()":
                 print("[", end="")
                 for obj in obje_sss.values():
                     if obj._class.name_ == cls:
@@ -153,7 +153,7 @@ class HBNBCommand(cmd.Cmd):
                 print("]")
 
             # use <class name>.count()
-            elif methd == "count()":
+            elif mee_thd == "count()":
                 all = []
                 for obj in obje_sss.values():
                     if obj._class.name_ == cls:
@@ -161,17 +161,17 @@ class HBNBCommand(cmd.Cmd):
                 print(len(all))
 
             # use <class name>.show(<id>)
-            elif methd[0:4] == "show":
-                self.do_show(f"{cls} {methd[6:-2]}")
+            elif mee_thd[0:4] == "show":
+                self.do_show(f"{cls} {mee_thd[6:-2]}")
 
             # use <class name>.destroy(<id>)
-            elif methd[0:7] == "destroy":
-                self.do_destroy(f"{cls} {methd[9:-2]}")
+            elif mee_thd[0:7] == "destroy":
+                self.do_destroy(f"{cls} {mee_thd[9:-2]}")
 
             # use <class name>.update(<id>, <attr name>, <attr value>)
             # use <class name>.update(<id>, <dictionary representation>)
-            elif methd[0:6] == "update":
-                id, attr = methd[7:-1].split(",", 1)
+            elif mee_thd[0:6] == "update":
+                id, attr = mee_thd[7:-1].split(",", 1)
                 id = id.split('"')[1]
                 try:
                     att = json.loads(attr.replace("'", '"'))
