@@ -86,23 +86,23 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, args):
         """Prints all string representation of all instances"""
-        obj_s = storage.all()
+        obje_sss = storage.all()
         if len(args) == 0:
-            print([str(obj) for obj in obj_s.values()])
+            print([str(obj) for obj in obje_sss.values()])
             return
         args = args.split()
         if args[0] not in self.__mod_els:
             print("** class doesn't exist **")
             return
         t_all = []
-        for obj in obj_s.values():
+        for obj in obje_sss.values():
             if obj.__class__.__name__ == args[0]:
                 all.append(str(obj))
         print(t_all)
 
     def do_update(self, args):
         """Updates an instance based on the class name and id"""
-        obj_s = storage.all()
+        obje_sss = storage.all()
         if len(args) == 0:
             print("** class name missing **")
             return
@@ -113,7 +113,7 @@ class HBNBCommand(cmd.Cmd):
         if len(args) < 2:
             print("** instance id missing **")
             return
-        if "{}.{}".format(args[0], args[1]) not in obj_s:
+        if "{}.{}".format(args[0], args[1]) not in obje_sss:
             print("** no instance found **")
             return
         if len(args) < 3:
@@ -130,7 +130,7 @@ class HBNBCommand(cmd.Cmd):
                 a_val = float(args[3])
             except ValueError:
                 a_val = args[3].replace('"', "")
-        for key, obj in obj_s.items():
+        for key, obj in obje_sss.items():
             if f"{args[0]}.{args[1]}" == key:
                 setattr(obj, args[2], a_val)
                 storage.save()
@@ -141,13 +141,13 @@ class HBNBCommand(cmd.Cmd):
         handle dot notaion commands
         """
         if '.' in line:
-            obj_s = storage.all()
+            obje_sss = storage.all()
             cls, methd = line.split('.')
 
             # use <class name>.all()
             if methd == "all()":
                 print("[", end="")
-                for obj in obj_s.values():
+                for obj in obje_sss.values():
                     if obj._class.name_ == cls:
                         print(obj, end="")
                 print("]")
@@ -155,7 +155,7 @@ class HBNBCommand(cmd.Cmd):
             # use <class name>.count()
             elif methd == "count()":
                 all = []
-                for obj in obj_s.values():
+                for obj in obje_sss.values():
                     if obj._class.name_ == cls:
                         all.append(obj)
                 print(len(all))
