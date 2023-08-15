@@ -4,6 +4,7 @@
 
 import unittest
 from models.place import Place
+from datetime import datetime
 
 
 class test_place(unittest.TestCase):
@@ -81,3 +82,9 @@ class test_place(unittest.TestCase):
 
         new = self.value()
         self.assertEqual(type(new.amenity_ids), str)
+
+    def test_created_at_is_public_datetime(self):
+        self.assertEqual(datetime, type(Place().created_at))
+
+    def test_updated_at_is_public_datetime(self):
+        self.assertEqual(datetime, type(Place().updated_at))

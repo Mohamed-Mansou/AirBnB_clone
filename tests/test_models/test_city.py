@@ -4,6 +4,7 @@
 
 import unittest
 from models.city import City
+from datetime import datetime
 
 
 class test_City(unittest.TestCase):
@@ -22,3 +23,9 @@ class test_City(unittest.TestCase):
     def test_name(self):
         new = self.value()
         self.assertEqual(type(new.state_id), str)
+
+    def test_created_at_is_public_datetime(self):
+        self.assertEqual(datetime, type(City().created_at))
+
+    def test_updated_at_is_public_datetime(self):
+        self.assertEqual(datetime, type(City().updated_at))

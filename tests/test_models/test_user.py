@@ -2,6 +2,7 @@
 """ """
 import unittest
 from models.user import User
+from datetime import datetime
 
 
 class test_User(unittest.TestCase):
@@ -32,3 +33,9 @@ class test_User(unittest.TestCase):
         """ """
         new = self.value()
         self.assertEqual(type(new.password), str)
+
+    def test_created_at_is_public_datetime(self):
+        self.assertEqual(datetime, type(User().created_at))
+
+    def test_updated_at_is_public_datetime(self):
+        self.assertEqual(datetime, type(User().updated_at))
